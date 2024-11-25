@@ -3,29 +3,22 @@ from app.home import home_blueprint
 from app.page2 import page2_blueprint
 from app.page3 import page3_blueprint
 
-def create_app():
-    app = Flask(__name__)
 
-    # Load configurations
-    app.config.from_object('config.Config')
+app = Flask(__name__)
 
-    # Register Blueprints
-    app.register_blueprint(home_blueprint)
-    app.register_blueprint(page2_blueprint, url_prefix='/page2')  # Added URL prefix for page2
-    app.register_blueprint(page3_blueprint)
+# Load configurations
+app.config.from_object('config.Config')
 
-    # Route for the static home page
-    @app.route('/static-home')
-    def static_home():
-        return render_template('static_home.html')
+# Register Blueprints
+app.register_blueprint(home_blueprint)
+app.register_blueprint(page2_blueprint, url_prefix='/page2')  # Added URL prefix for page2
+app.register_blueprint(page3_blueprint)
 
-    # Default route (root URL), which redirects to /static-home
-    @app.route('/')
-    def index():
-        return redirect(url_for('static_home'))
+@app.route('/')
+def upload_form():
+    return render_template('index.html')
 
-    return app
+
 
 if __name__ == '__main__':
-    app = create_app()
-    app.run()
+    app.run(debug=True)
