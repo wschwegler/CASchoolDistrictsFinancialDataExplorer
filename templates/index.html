@@ -21,9 +21,19 @@
                     <li><a href="index.html">HOME</a></li>
                     <li><a href="">USER GUIDE</a></li>
                     <li><a href="{{ url_for('home.visualization') }}">VISUALIZATION</a></li>
-                    <li><a href="{{ url_for('page2.page2') }}">UPLOAD</a></li>
-
-
+                    <li><a href="#" onclick="redirectToPage()">UPLOAD</a></li>
+                    <script>
+                        function redirectToPage() {
+                            const correctPassword = "oxy"; 
+                            const userInput = prompt("Enter the password to proceed:");
+                            
+                            if (userInput === correctPassword) {
+                                window.location.href = "{{ url_for('page2.page2') }}"; 
+                            } else {
+                                alert("Incorrect password. Access denied.");
+                            }
+                        }
+                    </script>
                 </ul>
             </div>
             <i class="fa fa-bars" onclick="showMenu()"></i>
