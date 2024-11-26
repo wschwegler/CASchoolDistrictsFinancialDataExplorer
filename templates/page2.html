@@ -76,7 +76,23 @@
         }
 
         button:hover {
-            background-color: #FF7043;
+            background-color: #FF5722;
+        }
+
+        /* Download Link */
+        .download-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .download-link a {
+            color: #FF7043;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .download-link a:hover {
+            text-decoration: underline;
         }
 
         /* Responsive Design */
@@ -94,20 +110,21 @@
     <div class="container">
         <h1>Upload CSV Files</h1>
         <p class="instructions">
-            Please select the CSV files in the following order:
+            Please ensure that the CSV files you upload only contain the new data you want to add to the dataset. 
+            When uploading the files, please follow this order:
             <ol>
-                <li><strong>PropertyTax_DataSet_2019-20_to_2023-24_20240421_V1</strong></li>
-                <li><strong>PropertyTax_DataSet_20190513</strong></li>
                 <li><strong>school-districts_lea_directory</strong></li>
                 <li><strong>districts_ccd_finance</strong></li>
             </ol>
             Please upload all files at once in the specified order for proper processing.
         </p>
-        <form action="/upload" method="POST" enctype="multipart/form-data">
+        <!-- Upload Form -->
+        <form action="/page2/upload" method="POST" enctype="multipart/form-data">
             <label for="files">Select CSV files:</label>
             <input type="file" name="files[]" id="files" accept=".csv" multiple required>
-            <button type="submit">Upload and View Data</button>
+            <button type="submit">Upload and Process</button>
         </form>
+        
     </div>
 </body>
 </html>
