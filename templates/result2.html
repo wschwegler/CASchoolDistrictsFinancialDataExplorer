@@ -71,10 +71,10 @@
         <h2>Your files have been successfully processed!</h2>
         <p>Click the button below to download the processed file:</p>
         <!-- Download Form -->
-        <form action="{{ url_for('page2.download_file', filename=download_file) }}" method="get">
+        <form action="{{ url_for('page3.download_file', filename=download_file) }}" method="get">
             <button type="submit"> Download Processed Data</button>
         </form>
-        <button type="submit" onclick="redirectToPage()" style="margin-top: 20px;">Step 2</button>
+        <button type="submit" onclick="redirectToPage()" style="margin-top: 20px;">Step 3</button>
         <script>
             function redirectToPage() {                
                 window.location.href = "{{ url_for('page3.page3') }}"; 

@@ -12,7 +12,7 @@ app.config.from_object('config.Config')
 # Register Blueprints
 app.register_blueprint(home_blueprint)
 app.register_blueprint(page2_blueprint, url_prefix='/page2')  # Added URL prefix for page2
-app.register_blueprint(page3_blueprint)
+app.register_blueprint(page3_blueprint, url_prefix='/page3')
 
 @app.route('/')
 def upload_form():

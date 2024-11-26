@@ -124,6 +124,12 @@
             <input type="file" name="files[]" id="files" accept=".csv" multiple required>
             <button type="submit">Upload and Process</button>
         </form>
+        <button type="submit" href="#" onclick="redirectToPage()">Step 2</button>
+        <script>
+            function redirectToPage() {                
+                window.location.href = "{{ url_for('page3.page3') }}"; 
+            }
+        </script>
         
     </div>
 </body>

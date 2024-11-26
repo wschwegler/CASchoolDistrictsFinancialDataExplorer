@@ -3,15 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page 3</title>
+    <title>Upload CSV Files</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        /* Container */
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        /* Header */
+        h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        /* Instructions */
+        .instructions {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .instructions strong {
+            color: #333;
+        }
+
+        /* Input Styles */
+        input[type="file"] {
+            display: block;
+            margin-top: 10px;
+            padding: 5px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Button */
+        button {
+            display: block;
+            width: 100%;
+            background-color: #FF7043;
+            color: white;
+            font-size: 1rem;
+            padding: 10px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #FF5722;
+        }
+
+        /* Download Link */
+        .download-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .download-link a {
+            color: #FF7043;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .download-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            .instructions {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Page 3!</h1>
-    <a href="{{ url_for('home.home') }}">
-        <button>Go back to Home</button>
-    </a>
-    <a href="{{ url_for('page2.page2') }}">
-        <button>Go to Page 2</button>
-    </a>
+    <div class="container">
+        <h1>Upload CSV Files</h1>
+        <p class="instructions">
+            Please upload the relevant property tax dataset and the file from step 1.  
+            When uploading the files, please follow this order:
+            <ol>
+                <li><strong>File From Step 1</strong></li>
+                <li><strong>PropertyTax_DataSet</strong></li>
+            </ol>
+            Please upload all files at once in the specified order for proper processing.
+        </p>
+        <!-- Upload Form -->
+        <form action="/page3/upload" method="POST" enctype="multipart/form-data">
+            <label for="files">Select CSV files:</label>
+            <input type="file" name="files[]" id="files" accept=".csv" multiple required>
+            <button type="submit">Upload and Process</button>
+        </form>
+        <button type="submit" href="#" onclick="redirectToPage()">Step 3</button>
+        <script>
+            function redirectToPage() {                
+                window.location.href = "{{ url_for('page3.page3') }}"; 
+            }
+        </script>
+        <button type="submit" href="#" onclick="redirectToPage()">Back to Step 1</button>
+        <script>
+            function redirectToPage() {                
+                window.location.href = "{{ url_for('page2.page2') }}"; 
+            }
+        </script>
+        
+    </div>
 </body>
 </html>
