@@ -1,21 +1,21 @@
-// Constants and Global Variables
-const margin = {top: 20, right: 30, bottom: 50, left: 60};
+// Constants
+const margin = {top: 20, right: 30, bottom: 50, left: 100};
 const width = 800 - margin.left - margin.right;
 const height = 400 - margin.top - margin.bottom;
 
+// Global variables
 let parsedData = {};
 let currentDistrict = null;
 let allYears = [];
 let currentYear = null;
 
-// DOM Elements
+// DOM elements
 const searchInput = document.getElementById('searchInput');
 const attributeSelect = document.getElementById('attributeSelect');
 const yearSelect = document.getElementById('yearSelect');
 const districtList = document.getElementById('districtList');
 const selectedDistrictDiv = document.getElementById('selectedDistrict');
 const terminologyList = document.getElementById('terminologyList');
-const attributesList = document.getElementById('attributesList');
 const terminologyBox = document.getElementById('terminologyBox');
 const terminologyContent = document.getElementById('terminologyContent');
 const minimizeButton = document.getElementById('minimizeButton');
@@ -26,12 +26,35 @@ const tooltip = d3.select('body').append('div')
 
 // Terminology definitions
 const terminology = {
-    'Total Enrollment': 'The total number of students enrolled in the school district',
-    'Add Sample Terminologies': 'Sample',
-    'rev_fed_total': 'rev_fed_total',
-    'debt_interest': 'debt_interest',
-    // Add more terms as needed
+    'Red Dot':'Missing Data',
+    'Rev_total': 'Total revenue received by the school district from all sources (federal, state, and local)',
+    'Rev_fed_total': 'Total federal revenue, including grants and program-specific funding',
+    'Rev_state_total': 'Total revenue received from state sources, including state education funding',
+    'Rev_local_total': 'Total revenue from local sources, including property taxes and local contributions',
+    'Exp_total': 'Total expenditures made by the district across all categories',
+    'Exp_current_instruction_total': 'Total current spending specifically for instruction-related activities',
+    'Outlay_capital_total': 'Total spending on capital improvements, such as buildings and equipment',
+    'Number_of_schools': 'Total number of schools operating under this district',
+    'Enrollment': 'Total number of students enrolled in the district',
+    'Teachers_total_fte': 'Number of full-time equivalent teaching positions',
+    'Salaries_instruction': 'Total salaries paid for instructional staff',
+    'Benefits_employee_total': 'Total cost of employee benefits including healthcare, retirement, etc.',
+    'Debt_interest': 'Interest payments on district debt',
+    'Debt_longterm_outstand_end_fy': 'Long-term debt balance at the end of fiscal year',
+    'Debt_shortterm_outstand_end_fy': 'Short-term debt balance at the end of fiscal year',
+    'Assessed_value': 'Combined secured and unsecured net taxable property value in the district',
+    'Adjusted_assessed_value': 'Assessed property value adjusted to 2023 dollars to account for inflation',
+    'Payments_charter_schools': 'Total payments made to charter schools by the district',
+    'Urban_centric_locale': "Classification of the district's urbanization level (urban, suburban, rural, etc.)"
 };
+
+function getMostRecentDistrictName(data, lea_id) {
+    const districtData = data.filter(d => d.lea_id === lea_id);
+    const mostRecent = districtData.reduce((prev, current) => 
+        (prev.year > current.year) ? prev : current
+    );
+    return mostRecent.lea_name;
+}
 
 function initializeTerminology() {
     Object.entries(terminology).forEach(([term, definition]) => {
@@ -45,7 +68,6 @@ function initializeTerminology() {
     });
 }
 
-// Update the minimize button functionality
 function initializeTerminologyBox() {
     let isMinimized = false;
 
@@ -54,7 +76,6 @@ function initializeTerminologyBox() {
         terminologyBox.classList.toggle('minimized', isMinimized);
         terminologyContent.classList.toggle('hidden', isMinimized);
         
-        // Update both text and icon
         const minimizeText = minimizeButton.querySelector('.minimize-text');
         const minimizeIcon = minimizeButton.querySelector('.minimize-icon');
         
@@ -64,25 +85,15 @@ function initializeTerminologyBox() {
     });
 }
 
-// New function to get the most recent district name for a given lea_id
-function getMostRecentDistrictName(data, lea_id) {
-    const districtData = data.filter(d => d.lea_id === lea_id);
-    const mostRecent = districtData.reduce((prev, current) => 
-        (prev.year > current.year) ? prev : current
-    );
-    return mostRecent.lea_name;
-}
-
 // Load and process data
 d3.csv("/static/Data.csv").then(data => {
-    // Filter relevant attributes (excluding leaid and other non-relevant columns)
     const relevantAttributes = Object.keys(data[0]).filter(key => 
         !["year", "lea_id", "leaid", "phone", "lea_name", "urban_centric_locale", "fiscal year", 
         "debt_shortterm_outstand_end_fy","payments_charter_schools","name of school district",""].includes(key)
     );
 
     // Populate attribute dropdown
-    attributeSelect.innerHTML = ''; // Clear existing options
+    attributeSelect.innerHTML = '';
     relevantAttributes.forEach((attr, index) => {
         const option = document.createElement('option');
         option.value = attr;
@@ -90,22 +101,22 @@ d3.csv("/static/Data.csv").then(data => {
         attributeSelect.appendChild(option);
     });
 
-    // Process data and extract lea_id
+    // Process data
     data.forEach(d => {
         d.year = +d.year;
-        d.lea_id = d.lea_id || d.leaid; // Handle both possible ID field names
+        d.lea_id = d.lea_id || d.leaid;
         relevantAttributes.forEach(attr => {
             d[attr] = d[attr] === "" || isNaN(d[attr]) || +d[attr] <= 0 ? null : +d[attr];
         });
     });
 
-        // Get unique lea_ids and their most recent names
+    // Get unique lea_ids and their most recent names
     const uniqueIds = [...new Set(data.map(d => d.lea_id))];
     const idToNameMap = new Map(
         uniqueIds.map(id => [id, getMostRecentDistrictName(data, id)])
     );
 
-    // Group data by lea_id only, using the most recent name
+    // Group data by lea_id
     parsedData = d3.group(data, d => `${idToNameMap.get(d.lea_id)} (${d.lea_id})`);
 
     // Get all unique years
@@ -113,7 +124,7 @@ d3.csv("/static/Data.csv").then(data => {
     currentYear = allYears[allYears.length - 1];
 
     // Populate year dropdown
-    yearSelect.innerHTML = ''; // Clear existing options
+    yearSelect.innerHTML = '';
     allYears.forEach(year => {
         const option = document.createElement('option');
         option.value = year;
@@ -124,7 +135,7 @@ d3.csv("/static/Data.csv").then(data => {
 
     // Populate district list
     const sortedDistricts = Array.from(parsedData.keys()).sort();
-    districtList.innerHTML = ''; // Clear existing items
+    districtList.innerHTML = '';
     sortedDistricts.forEach(district => {
         const div = document.createElement('div');
         div.className = 'district-list-item';
@@ -167,7 +178,7 @@ function selectDistrict(district) {
     });
 
     // Update selected district display
-    selectedDistrictDiv.textContent = `Selected District: ${district}`;
+    selectedDistrictDiv.textContent = district;
     selectedDistrictDiv.style.display = 'block';
 
     updateChart();
@@ -198,24 +209,21 @@ function updateChart() {
             value: yearData ? yearData[selectedAttribute] : null
         };
     });
-    
-    const data = parsedData.get(currentDistrict).map(d => ({
-        year: d.year,
-        value: d[selectedAttribute]
-    }));
 
     const x = d3.scaleLinear()
-    .domain([d3.min(allYears), d3.max(allYears)])
+        .domain([d3.min(allYears), d3.max(allYears)])
         .range([0, width]);
 
     const y = d3.scaleLinear()
         .domain([0, d3.max(allYearPoints, d => d.value)])
         .range([height, 0]);
 
-    // Add axes and labels
+    // Add X axis and label
     svg.append('g')
         .attr('transform', `translate(0,${height})`)
-        .call(d3.axisBottom(x).ticks(data.length).tickFormat(d3.format('d')));
+        .call(d3.axisBottom(x)
+            .ticks(allYears.length)
+            .tickFormat(d3.format('d')));
     
     svg.append('text')
         .attr('x', width / 2)
@@ -223,13 +231,22 @@ function updateChart() {
         .style('text-anchor', 'middle')
         .text('Year');
 
+    // Add Y axis and label with formatted ticks
     svg.append('g')
-        .call(d3.axisLeft(y));
+        .call(d3.axisLeft(y)
+            .tickFormat(d => {
+                if (d >= 1000000) {
+                    return (d/1000000) + 'M';
+                } else if (d >= 1000) {
+                    return (d/1000) + 'K';
+                }
+                return d;
+            }));
     
     svg.append('text')
         .attr('transform', 'rotate(-90)')
         .attr('x', -height / 2)
-        .attr('y', -margin.left + 15)
+        .attr('y', -margin.left + 30)
         .style('text-anchor', 'middle')
         .text(selectedAttribute);
 
@@ -256,12 +273,12 @@ function updateChart() {
                 .attr('r', 4)
                 .attr('fill', 'red');
             
-            svg.append('text')
-                .attr('x', x(d.year))
-                .attr('y', (height/2) - 10)
-                .attr('text-anchor', 'middle')
-                .attr('class', 'missing-label')
-                .text('Missing/Invalid data');
+            // svg.append('text')
+            //     .attr('x', x(d.year))
+            //     .attr('y', (height/2) - 10)
+            //     .attr('text-anchor', 'middle')
+            //     .attr('class', 'missing-label')
+            //     .text('Missing data');
         } else {
             // Normal dot for valid data
             svg.append('circle')
@@ -286,17 +303,27 @@ function updateAttributesList() {
     if (!currentDistrict || !currentYear) return;
 
     const yearData = parsedData.get(currentDistrict).find(d => d.year === currentYear);
-    //if (!yearData) return;
+    attributesList.innerHTML = '';
 
-    attributesList.innerHTML = '';  // Clear existing list
+    if (!yearData) {
+        // Handle case where no data exists for the selected year
+        const div = document.createElement('div');
+        div.className = 'attribute-item';
+        div.style.gridColumn = '1 / -1';
+        div.style.textAlign = 'center';
+        div.style.color = 'red';
+        div.textContent = 'No data available for this year';
+        attributesList.appendChild(div);
+        return;
+    }
 
-    // Get all relevant attributes
-    const relevantAttributes = Object.keys(yearData || {}).filter(key =>
+    // Get relevant attributes
+    const attributes = Object.keys(yearData).filter(key => 
         !["year", "lea_id", "leaid", "phone", "lea_name", "urban_centric_locale"].includes(key)
     );
 
-    // Sort attributes alphabetically
-    relevantAttributes.sort().forEach(attr => {
+    // Sort attributes alphabetically and create list
+    attributes.sort().forEach(attr => {
         const value = yearData[attr];
         const div = document.createElement('div');
         div.className = 'attribute-item';
@@ -321,51 +348,3 @@ function updateAttributesList() {
         attributesList.appendChild(div);
     });
 }
-
-// Function to extract district ID from the district string
-function getDistrictId(districtString) {
-    const match = districtString.match(/\(([^)]+)\)/);
-    return match ? match[1] : '';
-}
-
-// Function to format district display
-function formatDistrictDisplay(district) {
-    const [name, idPart] = district.split('(');
-    const id = idPart.replace(')', '').trim();
-    return `${name.trim()} (ID: ${id})`;
-}
-
-// Update the selectDistrict function to use proper formatting
-function selectDistrict(district) {
-    currentDistrict = district;
-    
-    // Update selected state in district list
-    const items = districtList.getElementsByClassName('district-list-item');
-    Array.from(items).forEach(item => {
-        item.classList.toggle('selected', item.textContent === district);
-    });
-
-    // Update selected district display with proper formatting
-    selectedDistrictDiv.textContent = formatDistrictDisplay(district);
-    selectedDistrictDiv.style.display = 'block';
-
-    updateChart();
-    updateAttributesList();
-}
-
-// Enhanced search function to handle both name and ID
-function handleSearch(e) {
-    const query = e.target.value.toLowerCase();
-    const districtItems = districtList.getElementsByClassName('district-list-item');
-    
-    Array.from(districtItems).forEach(item => {
-        const districtText = item.textContent.toLowerCase();
-        const districtId = getDistrictId(districtText);
-        const match = districtText.includes(query) || districtId.includes(query);
-        item.style.display = match ? 'block' : 'none';
-    });
-}
-
-// Initialize the visualization
-document.addEventListener('DOMContentLoaded', () => {
-});
