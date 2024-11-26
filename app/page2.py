@@ -75,12 +75,10 @@ def upload_files():
         df3.columns = df3.columns.str.lower()
         df3 = df3.filter(columns_to_keep)
         df3['leaid'] = df3['leaid'].astype(str)
-        print("year df3")
 
         df4.columns = df4.columns.str.lower()
         df4 = df4.filter(columns_to_keep)
         df4['leaid'] = df4['leaid'].astype(str)
-        print("year df4")
 
         counter = 0 
         # Merge df3 and df4 based on best matches
