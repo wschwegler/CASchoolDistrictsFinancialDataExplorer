@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+</head>
+<body>
+    <header>
+        <h1>User Guide</h1>
+    </header>
+    <main>
+        <section id="download-dataset">
+            <h2>Download the Dataset</h2>
+                <p>Go to the home page, click the download the dataset button in the center</p>       
+            <div class="image-container">
+                <img src= "{{ url_for('static', filename='images/userguide1.png') }}" >
+            </div>
+        </section>
+        <section id="use-visualization">
+            <h2>Use the Visualization</h2>
+            <div class="step">
+                <p>Use <strong>Search Districts</strong> to search the name of school districts you want to visualize</p>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/userguide2.png') }}">
+                </div>
+            </div>
+            <div class="step">
+                <p>View your search result under <strong>All Districts</strong></p>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/userguide3.png') }}">
+                </div>
+            </div>
+            <div class="step">
+                <p>View attributes the dataset contains and select years under <strong>All attributes</strong></p>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/userguide4.png') }}">
+                </div>
+            </div>
+            <div class="step">
+                <p>Click expand/minimize under <strong>Terminology</strong> to show/hide the window that shows the explaination of terminologies in the page</p>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/userguide5.png') }}">
+                </div>
+            </div>
+            <div class="step">
+                <p>Select the attribute to visualize and view the visualized data under <strong>California School District Data Visualization</strong></p>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/userguide6.png') }}">
+                </div>
+            </div>
+            <div class="step">
+                <p>Put your mouse on the points to show year and enrollment data</p>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/userguide7.png') }}">
+                </div>
+            </div>
+        </section>        
+    </main>
+</body>
+</html>
