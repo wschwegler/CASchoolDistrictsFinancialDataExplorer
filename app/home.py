@@ -10,3 +10,7 @@ def home():
 @home_blueprint.route('/visualization')
 def visualization():
     return render_template('visualization.html')  # Returns the 'visualization.html' template
+
+@home_blueprint.route('/database')
+def database():
+    return render_template('database.html')
