@@ -2,6 +2,8 @@ from flask import Flask, Blueprint, render_template, request, send_file
 import pandas as pd
 import os
 import shutil
+import difflib
+
 
 # Define the blueprint for page2
 page2_blueprint = Blueprint('page2', __name__)
@@ -60,11 +62,49 @@ def upload_files():
 
     try:
         # Load the first CSV into a DataFrame as an example
-        df1 = pd.read_csv(saved_files[0])
+        df3 = pd.read_csv(saved_files[0])
+        df4 = pd.read_csv(saved_files[1])
+
+        columns_to_keep = ['leaid', 'year', 'lea_name', 'phone', 'urban_centric_locale', 'number_of_schools', 'enrollment',
+                       'teachers_total_fte', 'race', 'rev_total', 'rev_fed_total', 'rev_state_total', 'rev_local_total',
+                       'exp_total', 'exp_current_instruction_total', 'outlay_capital_total', 'payments_charter_schools',
+                       'salaries_instruction', 'benefits_employee_total', 'debt_interest', 
+                       'debt_longterm_outstand_end_fy', 'debt_shortterm_outstand_end_fy', 'est_population_5_17_poverty_pct']
+    
+        #df3 = df3[df3['state_mailing'].str.contains('CA', na=False)]
+        df3.columns = df3.columns.str.lower()
+        df3 = df3.filter(columns_to_keep)
+        df3['leaid'] = df3['leaid'].astype(str)
+        print("year df3")
+
+        df4.columns = df4.columns.str.lower()
+        df4 = df4.filter(columns_to_keep)
+        df4['leaid'] = df4['leaid'].astype(str)
+        print("year df4")
+
+        counter = 0 
+        # Merge df3 and df4 based on best matches
+        merged_df2 = pd.DataFrame(columns=df3.columns.tolist() + df4.columns.tolist())
+        for _, row in df3.iterrows():
+            target = row['leaid']
+            target_year = row['year']
+            candidates = df4[df4['year'] == target_year]
+            best_match = None
+            best_ratio = 0
+            for _, candidate in candidates.iterrows():
+                ratio = difflib.SequenceMatcher(None, target, candidate['leaid']).ratio()
+                if ratio > best_ratio and ratio >= 0.92:
+                    counter += 1
+                    print(counter)
+                    best_ratio = ratio
+                    best_match = candidate
+            if best_match is not None:
+                new_row = pd.concat([row, best_match]).to_frame().T
+                merged_df2 = pd.concat([merged_df2, new_row], ignore_index=True)
 
         # Save df1 as a downloadable file in the MERGED_FOLDER
         df1_filepath = os.path.join(MERGED_FOLDER, 'processed_df1.csv')
-        df1.to_csv(df1_filepath, index=False)
+        merged_df2.to_csv(df1_filepath, index=False)
     except Exception as e:
         return f"Error processing files: {str(e)}"
 
