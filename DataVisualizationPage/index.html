@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>California School District Data Visualization Tool</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="search-panel">
+                <h2>Search Districts</h2>
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search by name or ID...">
+                </div>
+            </div>
+
+            <div class="district-list-panel">
+                <h2>All Districts</h2>
+                <div id="districtList" class="district-list"></div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="visualization-panel">
+                <h2>California School District Data Visualization</h2>
+                <div id="selectedDistrict" class="selected-district" style="display: none;"></div>
+                <div class="chart-controls">
+                    <div>
+                        <label for="attributeSelect">Select Attribute: </label>
+                        <select id="attributeSelect"></select>
+                    </div>
+                </div>
+                <div id="chartContainer"></div>
+            </div>
+
+            <div class="attributes-panel">
+                <div class="header-with-controls">
+                    <h2>All Attributes</h2>
+                    <div>
+                        <label for="yearSelect">Select Year: </label>
+                        <select id="yearSelect"></select>
+                    </div>
+                </div>
+                <div id="attributesList" class="attribute-list"></div>
+            </div>
+        </div>
+
+        <div class="terminology-box" id="terminologyBox">
+            <div class="terminology-header">
+                <h3>Terminology</h3>
+                <div class="minimize-control" id="minimizeButton">
+                    <span class="minimize-text">minimize</span>
+                    <span class="close-button minimize-icon">▾</span>
+                </div>
+            </div>
+            <div class="terminology-content" id="terminologyContent">
+                <div id="terminologyList" class="terminology-list"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
