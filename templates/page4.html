@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Step 2</title>
+    <title>Step 3</title>
     <style>
         /* General Styles */
         body {
@@ -110,30 +110,24 @@
     <div class="container">
         <h1>Upload CSV Files</h1>
         <p class="instructions">
-            Please upload the relevant property tax dataset and the file from step 1.  
+            Please upload the file from step 2 and the old merged file (can be downloaded on the home page).  
             When uploading the files, please follow this order:
             <ol>
-                <li><strong>File From Step 1</strong></li>
-                <li><strong>PropertyTax_DataSet</strong></li>
+                <li><strong>File From Step 2</strong></li>
+                <li><strong>Data.csv</strong></li>
             </ol>
             Please upload all files at once in the specified order for proper processing.
         </p>
         <!-- Upload Form -->
-        <form action="/page3/upload" method="POST" enctype="multipart/form-data">
+        <form action="/page4/upload" method="POST" enctype="multipart/form-data">
             <label for="files">Select CSV files:</label>
             <input type="file" name="files[]" id="files" accept=".csv" multiple required>
             <button type="submit">Upload and Process</button>
         </form>
-        <button type="button" onclick="redirectToPage4()">Step 3</button>
-        <script>
-            function redirectToPage4() {
-                window.location.href = "{{ url_for('page4.page4') }}"; 
-            }
-        </script>
-        <button type="submit" onclick="redirectToPage()">Back to Step 1</button>
+        <button type="submit" onclick="redirectToPage()">Back to Homepage</button>
         <script>
             function redirectToPage() {                
-                window.location.href = "{{ url_for('page2.page2') }}"; 
+                window.location.href = "{{ url_for('home.home') }}"; 
             }
         </script>
         
