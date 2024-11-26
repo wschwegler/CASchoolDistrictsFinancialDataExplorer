@@ -26,6 +26,7 @@ const tooltip = d3.select('body').append('div')
 
 // Terminology definitions
 const terminology = {
+    'Red Dot':'Missing Data',
     'Rev_total': 'Total revenue received by the school district from all sources (federal, state, and local)',
     'Rev_fed_total': 'Total federal revenue, including grants and program-specific funding',
     'Rev_state_total': 'Total revenue received from state sources, including state education funding',
@@ -272,12 +273,12 @@ function updateChart() {
                 .attr('r', 4)
                 .attr('fill', 'red');
             
-            svg.append('text')
-                .attr('x', x(d.year))
-                .attr('y', (height/2) - 10)
-                .attr('text-anchor', 'middle')
-                .attr('class', 'missing-label')
-                .text('Missing data');
+            // svg.append('text')
+            //     .attr('x', x(d.year))
+            //     .attr('y', (height/2) - 10)
+            //     .attr('text-anchor', 'middle')
+            //     .attr('class', 'missing-label')
+            //     .text('Missing data');
         } else {
             // Normal dot for valid data
             svg.append('circle')
