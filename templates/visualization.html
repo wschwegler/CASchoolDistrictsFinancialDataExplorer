@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>California School District Data Visualization Tool</title>
+    <title>School District Data Visualization</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='viz.css') }}">
 </head>
@@ -24,14 +24,9 @@
 
         <div class="right-panel">
             <div class="visualization-panel">
-                <h2>California School District Data Visualization</h2>
+                <h2>School District Data Visualization</h2>
                 <div id="selectedDistrict" class="selected-district" style="display: none;"></div>
-                <div class="chart-controls">
-                    <div>
-                        <label for="attributeSelect">Select Attribute: </label>
-                        <select id="attributeSelect"></select>
-                    </div>
-                </div>
+                <div id="chartControls"></div>
                 <div id="chartContainer"></div>
             </div>
 
