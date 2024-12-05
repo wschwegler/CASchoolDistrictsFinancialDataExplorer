@@ -228,6 +228,7 @@ function updateChart() {
     // Add summary section
     const summaryDiv = document.createElement('div');
     summaryDiv.className = 'chart-summary';
+    summaryDiv.style.marginLeft = '100px'; // Move it to the right
     summaryDiv.innerHTML = `
         <h3>Comparing:</h3>
         <div class="metric-summary">
@@ -241,6 +242,10 @@ function updateChart() {
                     <span>${secondaryAttribute}</span>
                 </div>
             ` : ''}
+            <div class="metric-item">
+                <span class="dot" style="background: #000"></span>
+                <span>Missing Data</span>
+            </div>
         </div>
     `;
     chartContainer.appendChild(summaryDiv);

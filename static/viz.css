@@ -242,6 +242,7 @@ select {
     padding: 15px;
     background: #f8f9fa;
     border-radius: 8px;
+    width: fit-content;  /* Make the box only as wide as needed */
 }
 
 .metric-summary {
