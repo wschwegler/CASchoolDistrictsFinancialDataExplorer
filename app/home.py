@@ -14,3 +14,7 @@ def visualization():
 @home_blueprint.route('/database')
 def database():
     return render_template('database.html')
+
+@home_blueprint.route('/userguide')
+def userguide():
+    return render_template('userguide.html')  
