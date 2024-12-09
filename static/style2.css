@@ -10,7 +10,7 @@ body {
 
 /* Header */
 header {
-    background-color: #4CAF50;
+    background-color: #FF7043;
     color: white;
     text-align: center;
     padding: 1rem 0;
@@ -35,7 +35,7 @@ section {
 }
 
 section h2 {
-    border-bottom: 2px solid #4CAF50;
+    border-bottom: 2px solid #FF7043;
     padding-bottom: 10px;
     margin-bottom: 20px;
     font-size: 1.8rem;
@@ -52,7 +52,7 @@ ul li {
 }
 
 a {
-    color: #4CAF50;
+    color: #FF7043;
     text-decoration: none;
 }
 
@@ -78,7 +78,7 @@ a:hover {
 footer {
     text-align: center;
     padding: 20px 0;
-    background: #4CAF50;
+    background: #FF7043;
     color: white;
     margin-top: 20px;
 }
