@@ -11,9 +11,13 @@ def home():
 def visualization():
     return render_template('visualization.html')  # Returns the 'visualization.html' template
 
-@home_blueprint.route('/database')
+# @home_blueprint.route('/database')
+# def database():
+#     return render_template('database.html')
+
+@home_blueprint.route('/updateCsv')
 def database():
-    return render_template('database.html')
+    return render_template('update.html')
 
 @home_blueprint.route('/userguide')
 def userguide():
