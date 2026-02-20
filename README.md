@@ -58,10 +58,5 @@ README.md       Project documentation
 
 ## Screenshots
 
-*(Recommended: include 2–4 screenshots showcasing the Home page, Visualization interface, and Upload workflow)*
-
-```text
-Example:
-docs/images/home.png
-docs/images/visualization.png
-docs/images/upload.png
+docs/images/homepage.png
+docs/images/graph.png
