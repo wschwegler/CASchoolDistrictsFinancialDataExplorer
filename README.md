@@ -1,8 +1,7 @@
 # California School District Financial Data Explorer
 
-**Author:** Wilson Schwegler  
+**Author:** Wilson Schwegler, Matthew Uytioco, Chai Rui, & Ruige Wu  
 **Affiliation:** Occidental College  
-**Project Type:** Applied Data Engineering & Web Application  
 **Live Application:** https://caschooldistrictsfinancialdataexplorer.onrender.com
 
 ---
