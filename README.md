@@ -38,6 +38,24 @@ The application supports both **data exploration** and **data maintenance**, all
 
 ---
 
+## Repository Structure
+
+app/            Flask application logic
+
+templates/      HTML templates
+
+static/         CSS and static assets
+
+main.py         Application entry point
+
+config.py       Configuration settings
+
+requirements.txt Python dependencies
+
+README.md       Project documentation
+
+---
+
 
 ## Screenshots
 
