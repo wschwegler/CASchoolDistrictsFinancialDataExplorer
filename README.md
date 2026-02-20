@@ -59,7 +59,7 @@ README.md       Project documentation
 ## Screenshots
 
 ### Home Page 
-![Home Page] (docs/images/homescreen.png)
+![Home Page](docs/images/homescreen.png)
 
 ### Visualization Interface
 ![Visualization Interface](docs/images/graph.png)
